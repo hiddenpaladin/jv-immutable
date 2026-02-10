@@ -1,8 +1,6 @@
 package core.basesyntax;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Make this class immutable. See requirements in task description.
@@ -16,8 +14,13 @@ public final class Car {
     public Car(Integer year, String color, List<Wheel> wheels, Engine engine) {
         this.year = year;
         this.color = color;
-        this.wheels =  new ArrayList<>(wheels);
         this.engine = engine;
+        List<Wheel> tempList;
+        tempList = new ArrayList<>();
+        for (int i = 0; i <= wheels.size(); i++) {
+            tempList.set(i,wheels.get(i).clone());
+        }
+        this.wheels = tempList;
     }
 
     public String getColor() {
@@ -29,12 +32,20 @@ public final class Car {
     }
 
     public List<Wheel> getWheels() {
-        return new ArrayList<>(wheels);
+        List<Wheel> tempList;
+        tempList = new ArrayList<>();
+        for (int i = 0; i <= wheels.size(); i++) {
+            tempList.set(i,wheels.get(i).clone());
+        }
+        return tempList;
     }
 
-    public Engine getEngine() throws CloneNotSupportedException {
-        return engine.clone();
+    public Engine getEngine() {
+        Engine tempEngine = engine.clone();
+        return tempEngine;
     }
+
+    //переделать все что под этим сообщением
 
     @Override
     public int hashCode() {
@@ -46,8 +57,6 @@ public final class Car {
         return  Objects.equals(this,obj);
     }
 
-    //implement this class
-
     public Car changeEngine(Engine engine) {
         return new Car(this.year,this.color,this.wheels,engine);
     }
@@ -57,9 +66,13 @@ public final class Car {
     }
 
     public Car addWheel(Wheel newWheel) {
-        List<Wheel> newArray = new ArrayList<>(wheels);
-        newArray.add(newWheel);
-        return new Car(this.year,this.color,newArray,this.engine);
+        List<Wheel> tempList;
+        tempList = new ArrayList<>();
+        for (int i = 0; i <= wheels.size(); i++) {
+            tempList.set(i,wheels.get(i).clone());
+        }
+        tempList.add(newWheel.clone());
+        return new Car(this.year,this.color,tempList,this.engine);
     }
 
     @Override
