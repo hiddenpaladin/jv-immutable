@@ -2,20 +2,12 @@ package core.basesyntax;
 
 import java.util.Objects;
 
-public class Engine implements Cloneable {
+public class Engine {
     private Integer horsePower;
     private String manufacturer;
 
     public Engine(Integer horsePower, String manufacturer) {
         this.horsePower = horsePower;
-        this.manufacturer = manufacturer;
-    }
-
-    public void setHorsePower(Integer horsePower) {
-        this.horsePower = horsePower;
-    }
-
-    public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
 
@@ -31,12 +23,15 @@ public class Engine implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this);
+        return Objects.hash(horsePower,manufacturer);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return Objects.equals(this,obj);
+        if (this == obj) return true; // Ссылка на самого себя
+        if (obj == null || getClass() != obj.getClass()) return false; // Проверка на null и тип
+        Engine myClass = (Engine) obj; // Приведение типа
+        return horsePower == myClass.horsePower && Objects.equals(manufacturer, myClass.manufacturer);
     }
 
     @Override

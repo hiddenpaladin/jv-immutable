@@ -17,8 +17,8 @@ public final class Car {
         this.engine = engine;
         List<Wheel> tempList;
         tempList = new ArrayList<>();
-        for (int i = 0; i <= wheels.size(); i++) {
-            tempList.set(i,wheels.get(i).clone());
+        for (int i = 0; i < wheels.size(); i++) {
+            tempList.add(i,wheels.get(i).clone());
         }
         this.wheels = tempList;
     }
@@ -49,12 +49,17 @@ public final class Car {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this);
+        return Objects.hash(year,color,wheels,engine);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return  Objects.equals(this,obj);
+        if (this == obj) return true; // Ссылка на самого себя
+        if (obj == null || getClass() != obj.getClass()) return false; // Проверка на null и тип
+        Car myClass = (Car) obj; // Приведение типа
+        return year == myClass.year && Objects.equals(color, myClass.color)
+                && Objects.equals(wheels, myClass.wheels)
+                && Objects.equals(engine, myClass.engine); // Сравнение полей
     }
 
     public Car changeEngine(Engine engine) {
@@ -68,8 +73,8 @@ public final class Car {
     public Car addWheel(Wheel newWheel) {
         List<Wheel> tempList;
         tempList = new ArrayList<>();
-        for (int i = 0; i <= wheels.size(); i++) {
-            tempList.set(i,wheels.get(i).clone());
+        for (int i = 0; i < wheels.size(); i++) {
+            tempList.add(i,wheels.get(i).clone());
         }
         tempList.add(newWheel.clone());
         return new Car(this.year,this.color,tempList,this.engine);
