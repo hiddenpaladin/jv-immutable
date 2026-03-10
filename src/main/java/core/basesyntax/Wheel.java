@@ -24,7 +24,7 @@ public class Wheel {
         if (this == obj) return true; // Ссылка на самого себя
         if (obj == null || getClass() != obj.getClass()) return false; // Проверка на null и тип
         Wheel myClass = (Wheel) obj; // Приведение типа
-        return radius == myClass.radius;
+        return Objects.equals(radius,myClass.radius);
     }
 
     @Override

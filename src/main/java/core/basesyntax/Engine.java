@@ -12,8 +12,7 @@ public class Engine {
     }
 
     public Integer getHorsePower() {
-        Engine newEngine = new Engine(this.horsePower,this.manufacturer);
-        return newEngine.horsePower;
+        return horsePower;
     }
 
     public String getManufacturer() {
@@ -31,7 +30,7 @@ public class Engine {
         if (this == obj) return true; // Ссылка на самого себя
         if (obj == null || getClass() != obj.getClass()) return false; // Проверка на null и тип
         Engine myClass = (Engine) obj; // Приведение типа
-        return horsePower == myClass.horsePower && Objects.equals(manufacturer, myClass.manufacturer);
+        return Objects.equals(horsePower,myClass.horsePower) && Objects.equals(manufacturer, myClass.manufacturer);
     }
 
     @Override

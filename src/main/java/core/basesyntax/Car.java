@@ -17,10 +17,12 @@ public final class Car {
         this.engine = engine;
         List<Wheel> tempList;
         tempList = new ArrayList<>();
-        for (int i = 0; i < wheels.size(); i++) {
-            tempList.add(i,wheels.get(i).clone());
+        if ( wheels != null) {
+            for (int i = 0; i < wheels.size(); i++) {
+                tempList.add(wheels.get(i).clone());
+            }
         }
-        this.wheels = tempList;
+        this.wheels = Collections.unmodifiableList(tempList);
     }
 
     public String getColor() {
@@ -34,15 +36,16 @@ public final class Car {
     public List<Wheel> getWheels() {
         List<Wheel> tempList;
         tempList = new ArrayList<>();
-        for (int i = 0; i <= wheels.size(); i++) {
-            tempList.set(i,wheels.get(i).clone());
+        if (wheels == null) {
+            for (int i = 0; i <= wheels.size(); i++) {
+                tempList.add(wheels.get(i).clone());
+            }
         }
         return tempList;
     }
 
     public Engine getEngine() {
-        Engine tempEngine = engine.clone();
-        return tempEngine;
+        return engine.clone();
     }
 
     //переделать все что под этим сообщением
@@ -57,7 +60,7 @@ public final class Car {
         if (this == obj) return true; // Ссылка на самого себя
         if (obj == null || getClass() != obj.getClass()) return false; // Проверка на null и тип
         Car myClass = (Car) obj; // Приведение типа
-        return year == myClass.year && Objects.equals(color, myClass.color)
+        return Objects.equals(year, myClass.year) && Objects.equals(color, myClass.color)
                 && Objects.equals(wheels, myClass.wheels)
                 && Objects.equals(engine, myClass.engine); // Сравнение полей
     }
@@ -74,7 +77,7 @@ public final class Car {
         List<Wheel> tempList;
         tempList = new ArrayList<>();
         for (int i = 0; i < wheels.size(); i++) {
-            tempList.add(i,wheels.get(i).clone());
+            tempList.add(wheels.get(i).clone());
         }
         tempList.add(newWheel.clone());
         return new Car(this.year,this.color,tempList,this.engine);
