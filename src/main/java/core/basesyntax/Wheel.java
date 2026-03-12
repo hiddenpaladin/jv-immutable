@@ -2,16 +2,20 @@ package core.basesyntax;
 
 import java.util.Objects;
 
-public class Wheel {
-    private  Integer radius;
+public class Wheel implements Cloneable {
+    private Integer radius;
 
     public Wheel(Integer radius) {
         this.radius = radius;
     }
 
-    public Integer getRadius() {
+    public int getRadius() {
         Wheel newWheel = new Wheel(this.radius);
         return newWheel.radius;
+    }
+
+    public void setRadius(Integer radius) {
+        this.radius = radius;
     }
 
     @Override
@@ -21,8 +25,12 @@ public class Wheel {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // Ссылка на самого себя
-        if (obj == null || getClass() != obj.getClass()) return false; // Проверка на null и тип
+        if (this == obj) {
+            return true; // Ссылка на самого себя
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false; // Проверка на null и тип
+        }
         Wheel myClass = (Wheel) obj; // Приведение типа
         return Objects.equals(radius,myClass.radius);
     }

@@ -1,6 +1,9 @@
 package core.basesyntax;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Make this class immutable. See requirements in task description.
@@ -14,15 +17,19 @@ public final class Car {
     public Car(Integer year, String color, List<Wheel> wheels, Engine engine) {
         this.year = year;
         this.color = color;
-        this.engine = engine;
+        this.engine = engine == null ? null : engine.clone();
         List<Wheel> tempList;
         tempList = new ArrayList<>();
-        if ( wheels != null) {
-            for (int i = 0; i < wheels.size(); i++) {
-                tempList.add(wheels.get(i).clone());
+        if (wheels != null) {
+            if (wheels.size() != 0) {
+                for (Wheel w : wheels) {
+                    tempList.add(w.clone());
+                }
             }
+            this.wheels = Collections.unmodifiableList(tempList);
+        } else {
+            throw new NullPointerException();
         }
-        this.wheels = Collections.unmodifiableList(tempList);
     }
 
     public String getColor() {
@@ -36,16 +43,20 @@ public final class Car {
     public List<Wheel> getWheels() {
         List<Wheel> tempList;
         tempList = new ArrayList<>();
-        if (wheels == null) {
-            for (int i = 0; i <= wheels.size(); i++) {
-                tempList.add(wheels.get(i).clone());
+        if (wheels != null) {
+            for (Wheel w : wheels) {
+                tempList.add(w.clone());
             }
         }
         return tempList;
     }
 
     public Engine getEngine() {
-        return engine.clone();
+        if (engine != null) {
+            return new Engine(engine.getHorsePower(),engine.getManufacturer());
+        } else {
+            return null;
+        }
     }
 
     //переделать все что под этим сообщением
@@ -57,8 +68,12 @@ public final class Car {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // Ссылка на самого себя
-        if (obj == null || getClass() != obj.getClass()) return false; // Проверка на null и тип
+        if (this == obj) {
+            return true; // Ссылка на самого себя
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false; // Проверка на null и тип
+        }
         Car myClass = (Car) obj; // Приведение типа
         return Objects.equals(year, myClass.year) && Objects.equals(color, myClass.color)
                 && Objects.equals(wheels, myClass.wheels)
@@ -76,8 +91,8 @@ public final class Car {
     public Car addWheel(Wheel newWheel) {
         List<Wheel> tempList;
         tempList = new ArrayList<>();
-        for (int i = 0; i < wheels.size(); i++) {
-            tempList.add(wheels.get(i).clone());
+        for (Wheel w : wheels) {
+            tempList.add(w.clone());
         }
         tempList.add(newWheel.clone());
         return new Car(this.year,this.color,tempList,this.engine);
